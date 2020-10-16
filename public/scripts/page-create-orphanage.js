@@ -6,7 +6,7 @@ L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png").addTo(map);
 
 // create icon
 const icon = L.icon({
-  iconUrl: "./public/images/map-marker.svg",
+  iconUrl: "/images/map-marker.svg",
   iconSize: [58, 68],
   iconAnchor: [29, 68],
 });
@@ -25,7 +25,9 @@ map.on("click", (event) => {
   marker && map.removeLayer(marker);
 
   //add icon layer
-  marker = L.marker([lat, lng], { icon }).addTo(map);
+  marker = L.marker([lat, lng], {
+    icon
+  }).addTo(map);
 });
 
 // Adicionar o campo fotos
@@ -60,9 +62,9 @@ function deleteField(event) {
   const fieldsContainer = document.querySelectorAll(".new-upload");
 
   if (fieldsContainer.length <= 1) {
-      //limpar valor do campo
-      span.parentNode.children[0].value = "";
-      return
+    //limpar valor do campo
+    span.parentNode.children[0].value = "";
+    return
   }
 
   //deletar o campo 
@@ -71,20 +73,36 @@ function deleteField(event) {
 
 
 //select yes or no
-function toggleSelect(event){
-    //retirar a class .active dos botões
-    // document.querySelectorAll('.button-select button').forEach((button) => {
-    //     button.classList.remove('active');
-    // });
-    document.querySelectorAll('.button-select button').forEach(button => button.classList.remove('active'));
+function toggleSelect(event) {
+  //retirar a class .active dos botões
+  // document.querySelectorAll('.button-select button').forEach((button) => {
+  //     button.classList.remove('active');
+  // });
+  document.querySelectorAll('.button-select button').forEach(button => button.classList.remove('active'));
 
-    //colocar a class .active nesse botão clicado
-    const button = event.currentTarget;
-    button.classList.add('active');
-    
-    //atualizar o meu input hidden com o valor selecionado
-    const input = document.querySelector('[name="open-on-weekends"]')
+  //colocar a class .active nesse botão clicado
+  const button = event.currentTarget;
+  button.classList.add('active');
 
-    //verificar se sim ou não tem
-    input.value = button.dataset.value;
+  //atualizar o meu input hidden com o valor selecionado
+  const input = document.querySelector('[name="open-on-weekends"]')
+
+  //verificar se sim ou não tem
+  input.value = button.dataset.value;
+}
+
+function validate(event) {
+  //pegar valor de lat e lng 
+  const lng = event.lng;
+  const lat = req.query.lat;
+  console.log(lat)
+  console.log(lng)
+
+  const needsLatAnLng = true;
+
+  //validar se lat e lng estão preenchidos
+  if (input.value === '') {
+    event.preventDefault();
+    alert("Selecione um ponto no mapa!");
+  }
 }
